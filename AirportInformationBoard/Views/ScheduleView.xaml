@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="AirportInformationBoard.Views.ScheduleView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AirportInformationBoard.Views"
+             xmlns:models="clr-namespace:AirportInformationBoard.Models"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="800" d:DataContext="{d:DesignInstance local:ScheduleView, IsDesignTimeCreatable=True}"
+             x:Name="This">
+
+    <UserControl.Resources>
+        <local:ScheduleStatusToStringConverter x:Key="ScheduleStatusToStringConverter"/>
+    </UserControl.Resources>
+    
+    <Grid DataContext="{Binding ElementName=This, Path=Schedule}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.Resources>
+            <Style TargetType="local:AnimatedTextBlock">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+        </Grid.Resources>
+
+        <StackPanel Grid.Column="0" >
+            <local:AnimatedTextBlock Text="{Binding AircraftType.Name}" ToolTip="Тип самолета"/>
+            
+            <StackPanel Orientation="Horizontal" ToolTip="Пассажиров/Вместимость" HorizontalAlignment="Center">
+                <!--<local:AnimatedTextBlock>
+                    <local:AnimatedTextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}/{1}">
+                            <Binding Path="PassengerCount"/>
+                            <Binding Path="AircraftType.Capacity"/>
+                        </MultiBinding>
+                    </local:AnimatedTextBlock.Text>
+                </local:AnimatedTextBlock>-->
+                <local:AnimatedTextBlock Text="{Binding PassengerCount}"/>
+                <TextBlock Text="/"/>
+                <local:AnimatedTextBlock Text="{Binding AircraftType.Capacity}" />
+            </StackPanel>
+
+            <local:AnimatedTextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 10" Text="{Binding CurrentStatus, Converter={StaticResource ScheduleStatusToStringConverter}}"/>
+        </StackPanel>
+
+
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <local:AnimatedTextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Departure.City}"/>
+            <local:DateTimeView Grid.Row="1" Grid.Column="0" DateTimeProp="{Binding Departure.DateTime}"/>
+            
+            <local:AnimatedTextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Arrival.City}"/>
+            <local:DateTimeView Grid.Row="1" Grid.Column="1" DateTimeProp="{Binding Arrival.DateTime}"/>
+            
+        </Grid>
+    </Grid>
+</UserControl>

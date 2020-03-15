@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="AirportInformationBoard.Views.AnimatedTextBlock"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AirportInformationBoard.Views"
+             mc:Ignorable="d" x:Name="This"
+             d:DesignHeight="100" d:DesignWidth="100" d:DataContext="{d:DesignInstance local:AnimatedTextBlock, IsDesignTimeCreatable=True}">
+
+    <UserControl.Resources>
+        <Storyboard x:Key="TextChangeAnimation">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0:0:0.5" From="0.5" To="1.0"/>
+            <ColorAnimation Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)" Duration="0:0:0.5" From="#934646" To="#E3DFD8"/>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <TextBlock Text="{Binding Text, ElementName=This}" x:Name="mainText"/>
+</UserControl>

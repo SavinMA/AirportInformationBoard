@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:AirportInformationBoard">
+
+    <SolidColorBrush Color="#444444" x:Key="MainBackgroundColor"/>
+    <SolidColorBrush Color="#E3DFD8" x:Key="MainForegroundColor"/>
+
+    <Style TargetType="ComboBox" x:Key="ComboBoxStyle">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+</ResourceDictionary>
