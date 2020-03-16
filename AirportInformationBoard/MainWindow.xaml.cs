@@ -57,27 +57,9 @@ namespace AirportInformationBoard
         }
         private void Load()
         {
-            var path = Path.Combine(Environment.CurrentDirectory, "Schedules");
-            if (!File.Exists(path))
-                Create(path);
-
+            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Schedules");
             var text = File.ReadAllTextAsync(path).Result;
             Schedules = Serializator<List<Schedule>>.DeSerializeFromString(text);
-        }
-
-        private void Create(string path)
-        {
-            var Current = DateTime.Now;
-
-            List<Schedule> list = new List<Schedule>();
-            for (int i = 0; i < 1000; i++)
-            {
-                Current = Current.AddMinutes(new Random().Next(100));
-                list.Add(new Schedule(Current));
-            }
-
-            var text = Serializator<List<Schedule>>.SerializeToString(list);
-            File.WriteAllText(path, text);
         }
 
         private void Timer_TimerElapsed()
