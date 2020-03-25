@@ -51,7 +51,7 @@ namespace AirportInformationBoard
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName]string prop="")
+        private void OnPropertyChanged([CallerMemberName]string prop = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
@@ -99,10 +99,14 @@ namespace AirportInformationBoard
                 });
 
 
-                departureStatistic.Statistic.LastDayFlight = Schedules.Where(x => x.Departure.DateTime > Timer.Current.AddDays(-1d) && x.Departure.DateTime <= Timer.Current)
-                                                                      .Sum(x => x.PassengerCount);
-                arrivalStatistic.Statistic.LastDayFlight = Schedules.Where(x => x.Arrival.DateTime > Timer.Current.AddDays(-1d) && x.Arrival.DateTime <= Timer.Current)
-                                                                    .Sum(x => x.PassengerCount);
+                var departureLastDayFlight = Schedules.Where(x => x.Departure.DateTime > Timer.Current.AddDays(-1d) && x.Departure.DateTime <= Timer.Current).Sum(x => x.PassengerCount);
+                var arrivalLastDayFlight = Schedules.Where(x => x.Arrival.DateTime > Timer.Current.AddDays(-1d) && x.Arrival.DateTime <= Timer.Current).Sum(x => x.PassengerCount);
+
+                if (departureLastDayFlight != departureStatistic.Statistic.LastDayFlight)
+                    departureStatistic.Statistic.LastDayFlight = departureLastDayFlight;
+
+                if (arrivalLastDayFlight != arrivalStatistic.Statistic.LastDayFlight)
+                    arrivalStatistic.Statistic.LastDayFlight = arrivalLastDayFlight;
 
                 if (LastUpdate <= Timer.Current.AddHours(-1d))
                 {
@@ -114,6 +118,5 @@ namespace AirportInformationBoard
                 }
             }
         }
-
     }
 }

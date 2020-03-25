@@ -19,16 +19,18 @@ namespace AirportInformationBoard.Views
     /// </summary>
     public partial class AnimatedTextBlock : UserControl
     {
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(AnimatedTextBlock), new PropertyMetadata("0", new PropertyChangedCallback(OnTextChanged)));
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(AnimatedTextBlock), new PropertyMetadata("0", null, new CoerceValueCallback(OnTextChanged)));
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
 
-        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static object OnTextChanged(DependencyObject d, object obj)
         {
             (d as AnimatedTextBlock).BeginStoryboard((d as AnimatedTextBlock).Resources["TextChangeAnimation"] as Storyboard);
+
+            return obj;
         }
 
         public AnimatedTextBlock()
